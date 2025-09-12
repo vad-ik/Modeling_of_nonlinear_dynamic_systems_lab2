@@ -29,9 +29,14 @@ def draw(X,h,name,mode=False):
         X=X.copy()
         X=np.abs(X)
     plt.subplot2grid((2, 3), (1, 0), colspan=3, rowspan=2)
-    plt.plot(time, X[0], 'b-', label='X(t)', linewidth=1)
-    plt.plot(time, X[1], 'r-', label='Y(t)', linewidth=1)
-    plt.plot(time, X[2], 'g-', label='Z(t)', linewidth=1)
+    if mode:
+        plt.semilogy(time, X[0], 'b-', label='X(t)', linewidth=1)
+        plt.semilogy(time, X[1], 'r-', label='Y(t)', linewidth=1)
+        plt.semilogy(time, X[2], 'g-', label='Z(t)', linewidth=1)
+    else:
+        plt.plot(time, X[0], 'b-', label='X(t)', linewidth=1)
+        plt.plot(time, X[1], 'r-', label='Y(t)', linewidth=1)
+        plt.plot(time, X[2], 'g-', label='Z(t)', linewidth=1)
     plt.xlabel('Время')
     plt.ylabel('Значения')
     plt.title('Временные ряды')
