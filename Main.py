@@ -1,6 +1,7 @@
-import Painter
 import numpy as np
 
+import Painter
+from CD import CD
 from Eiler import *
 from Lorenz import LorenzAttractor
 from RosslerAttractor import RosslerAttractor
@@ -27,16 +28,23 @@ def getDeviation(metod, time, h, X, a, rossler, name):
 
 
 if __name__ == "__main__":
-    attractor = LorenzAttractor()  # Создаем экземпляр класса
+    # attractor = RosslerAttractor()
+    # a = [0, 0.2, 0.2, 5.7]
+
+    attractor = LorenzAttractor()
+    a = [1, 10, 28, 8 / 3]
+
     X = [0.1, 0.1, 0.1]
-    a = [0, 10, 28, 8/3]
     time = 100
     h = 0.001
 
     solve(Eiler(), time, h, X, a, attractor, "Метод эйлера")
     solve(RungeKutta2(), time, h, X, a, attractor, "Неявный метод Рунге — Кутты второго порядка")
+    solve(CD(), time, h, X, a, attractor, "Метод Бутусова")
     solve(RungeKutta4(), time, h, X, a, attractor, "Классический метод Рунге — Кутты четвёртого порядка")
     time = 10
     getDeviation(Eiler(), time, h, X, a, attractor, "Погрешность метода эйлера")
     getDeviation(RungeKutta2(), time, h, X, a, attractor, "Погрешность неявного метода Рунге — Кутты второго порядка")
-   #
+    getDeviation(CD(), time, h, X, a, attractor, "Погрешность метода Бутусова")
+
+#
