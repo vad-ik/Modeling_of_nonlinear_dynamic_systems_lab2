@@ -37,4 +37,3 @@ if __name__ == "__main__":
     solve(RungeKutta4(), time, h, X, a, rossler, "Классический метод Рунге — Кутты четвёртого порядка")
     getDeviation(RungeKutta2(), time, h, X, a, rossler, "Неявный метод Рунге — Кутты второго порядка")
     getDeviation(Eiler(), time, h, X, a, rossler, "Метод эйлера")
-#
