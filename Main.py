@@ -1,12 +1,12 @@
 import numpy as np
 
-import Painter
-from CD import CD
-from Eiler import *
 from Lorenz import LorenzAttractor
-from RosslerAttractor import RosslerAttractor
-from RungeKutta2 import RungeKutta2
-from RungeKutta4 import RungeKutta4
+from method.CD import CD
+from method.Eiler import *
+from method.RungeKutta2 import RungeKutta2
+from method.RungeKutta4 import RungeKutta4
+from models import TypeOfParam
+from painters import Painter, DiffractionDiagram
 
 
 def solve(metod, time, h, X, a, rossler, name):
@@ -27,6 +27,17 @@ def getDeviation(metod, time, h, X, a, rossler, name):
     Painter.draw_3d(difference, name)
 
 
+def getDiffraction(metod, time, h, X, a, attractor):
+    DiffractionDiagram.plot(metod, X, a, h, time, 0, 25, 0.001, TypeOfParam.param.a1, "a1"
+                            , 60 / h, attractor)
+    DiffractionDiagram.plot(metod, X, a, h, time, 20, 45, 0.1, TypeOfParam.param.a2, "a2"
+                            , 60 / h, attractor)
+    DiffractionDiagram.plot(metod, X, a, h, time, 0, 4.5, 0.001, TypeOfParam.param.a3, "a3"
+                            , 60 / h, attractor)
+    DiffractionDiagram.plot(metod, X, a, h, time, 0.00001, 0.05, 0.0001, TypeOfParam.param.h, "h"
+                            , 60 / h, attractor)
+
+
 if __name__ == "__main__":
     # attractor = RosslerAttractor()
     # a = [0, 0.2, 0.2, 5.7]
@@ -36,15 +47,18 @@ if __name__ == "__main__":
 
     X = [0.1, 0.1, 0.1]
     time = 100
-    h = 0.001
+    h = 0.0001
 
-    solve(Eiler(), time, h, X, a, attractor, "Метод эйлера")
-    solve(RungeKutta2(), time, h, X, a, attractor, "Неявный метод Рунге — Кутты второго порядка")
-    solve(CD(), time, h, X, a, attractor, "Метод Бутусова")
-    solve(RungeKutta4(), time, h, X, a, attractor, "Классический метод Рунге — Кутты четвёртого порядка")
-    time = 10
-    getDeviation(Eiler(), time, h, X, a, attractor, "Погрешность метода эйлера")
-    getDeviation(RungeKutta2(), time, h, X, a, attractor, "Погрешность неявного метода Рунге — Кутты второго порядка")
-    getDeviation(CD(), time, h, X, a, attractor, "Погрешность метода Бутусова")
-
+    # solve(Eiler(), time, h, X, a, attractor, "Метод эйлера")
+    # solve(RungeKutta2(), time, h, X, a, attractor, "Неявный метод Рунге — Кутты второго порядка")
+    # solve(CD(), time, h, X, a, attractor, "Метод Бутусова")
+    # solve(RungeKutta4(), time, h, X, a, attractor, "Классический метод Рунге — Кутты четвёртого порядка")
+    # time = 10
+    # getDeviation(Eiler(), time, h, X, a, attractor, "Погрешность метода эйлера")
+    # getDeviation(RungeKutta2(), time, h, X, a, attractor, "Погрешность неявного метода Рунге — Кутты второго порядка")
+    # getDeviation(CD(), time, h, X, a, attractor, "Погрешность метода Бутусова")
+    getDiffraction(Eiler(), time, h, X, a, attractor)
+    getDiffraction(RungeKutta2(), time, h, X, a, attractor)
+    getDiffraction(CD(), time, h, X, a, attractor)
+    getDiffraction(RungeKutta4(), time, h, X, a, attractor)
 #

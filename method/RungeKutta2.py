@@ -4,7 +4,7 @@ class RungeKutta2:
         X1 = [[0.0] * 3 for _ in range(steps)]  # 3 столбца (x, y, z)
 
         X1[0] = X.copy()
-        Xtemp=[0.0,0.0,0.0]
+        Xtemp = [0.0, 0.0, 0.0]
 
         for i in range(steps - 1):
             dx = func.getdX(X1[i], a)
@@ -26,3 +26,6 @@ class RungeKutta2:
         X_coords, Y_coords, Z_coords = zip(*X1)
 
         return [list(X_coords), list(Y_coords), list(Z_coords)]
+
+    def getName(self):
+        return 'Метод средней точки'

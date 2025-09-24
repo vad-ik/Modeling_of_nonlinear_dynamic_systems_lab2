@@ -18,3 +18,6 @@ class CD:
 
         X_coords, Y_coords, Z_coords = zip(*X1)
         return [list(X_coords), list(Y_coords), list(Z_coords)]
+
+    def getName(self):
+        return "CD"

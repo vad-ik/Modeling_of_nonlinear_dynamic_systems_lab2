@@ -1,12 +1,11 @@
 class Eiler:
-    def getAns(self,time,h,X,a,func):
+    def getAns(self, time, h, X, a, func):
         steps = int(time / h) + 1
         X1 = [[0.0] * 3 for _ in range(steps)]
 
         X1[0] = X.copy()
 
         for i in range(steps - 1):
-
             dx = func.getdX(X1[i], a)
             dy = func.getdY(X1[i], a)
             dz = func.getdZ(X1[i], a)
@@ -18,3 +17,5 @@ class Eiler:
 
         return [list(X_coords), list(Y_coords), list(Z_coords)]
 
+    def getName(self):
+        return 'Eiler'
