@@ -38,7 +38,9 @@ def cluster_peaks(peaks, eps=0.1, min_samples=1):
 def plot(method, X, a, h, time, start, finish, step, type, name, skip, func):
     data = []
     debag = 0
-    for i in np.arange(0, 260, 260 / 100):  # перебор a2
+    maxA2=600
+
+    for i in np.arange(0, maxA2, maxA2/ 100):  # перебор a2
         print(debag)
         debag = debag + 1
 
@@ -55,13 +57,16 @@ def plot(method, X, a, h, time, start, finish, step, type, name, skip, func):
 
     # Сохранение
     np.save('data.npy', data)
-    save(data, method.getName(),  np.arange(start, finish, step),np.arange(0, 260, 260 / 100))
+    save(data, method.getName(),  np.arange(start, finish, step),np.arange(0, maxA2, maxA2 / 100))
 
     print(method.getName()+" готов")
+def fromFile(method,start, finish, step):
+    data = np.load('data.npy')
+    save(data,method.getName(),np.arange(start, finish, step),np.arange(0, 260, 260 / 10))
 
 
-def save(data, name, a3_values=None, a2_values=None):
-    file_path = "C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\name\\"
+def save(data, name, a2_values=None, a3_values=None):
+    file_path = "C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\2d\\"+name+"\\"
     base_name = "параметр a2 и a3 " + name + " ось "
 
     data = np.array(data)
@@ -87,8 +92,8 @@ def save(data, name, a3_values=None, a2_values=None):
 
         # Настраиваем подписи
         ax.set_title(f'Распределение по оси {getChar(i)}', fontsize=16, pad=20)
-        ax.set_xlabel('Значения параметра a2', fontsize=14)
-        ax.set_ylabel('Значения параметра a3', fontsize=14)
+        ax.set_ylabel('Значения параметра a2', fontsize=14)
+        ax.set_xlabel('Значения параметра a3', fontsize=14)
         ax.invert_yaxis()
 
         step_x = 5
