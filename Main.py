@@ -6,7 +6,7 @@ from method.Eiler import *
 from method.RungeKutta2 import RungeKutta2
 from method.RungeKutta4 import RungeKutta4
 from models import TypeOfParam
-from painters import Painter, DiffractionDiagram
+from painters import Painter, DiffractionDiagram, D2Difraction
 
 
 def solve(metod, time, h, X, a, rossler, name):
@@ -28,14 +28,20 @@ def getDeviation(metod, time, h, X, a, rossler, name):
 
 
 def getDiffraction(metod, time, h, X, a, attractor):
-    DiffractionDiagram.plot(metod, X, a, h, time, 0, 25, 0.001, TypeOfParam.param.a1, "a1"
+    print(metod.getName()+" старт")
+    DiffractionDiagram.plot(metod, X, a, h, time, 0, 25, 25 / 1000, TypeOfParam.param.a1, "a1"
                             , 60 / h, attractor)
-    DiffractionDiagram.plot(metod, X, a, h, time, 20, 45, 0.1, TypeOfParam.param.a2, "a2"
+    print("параметр 1")
+    DiffractionDiagram.plot(metod, X, a, h, time, 20, 350, 330 / 1000, TypeOfParam.param.a2, "a2"
                             , 60 / h, attractor)
-    DiffractionDiagram.plot(metod, X, a, h, time, 0, 4.5, 0.001, TypeOfParam.param.a3, "a3"
+    print("параметр 2")
+    DiffractionDiagram.plot(metod, X, a, h, time, 0, 4.5, 4.5 / 1000, TypeOfParam.param.a3, "a3"
                             , 60 / h, attractor)
-    DiffractionDiagram.plot(metod, X, a, h, time, 0.00001, 0.05, 0.0001, TypeOfParam.param.h, "h"
+    print("параметр 3")
+    DiffractionDiagram.plot(metod, X, a, h, time, 0.0001, 0.024, 0.0241/250, TypeOfParam.param.h, "h"
                             , 60 / h, attractor)
+    print("шаг")
+    print(metod.getName()+" готов")
 
 
 if __name__ == "__main__":
@@ -57,8 +63,10 @@ if __name__ == "__main__":
     # getDeviation(Eiler(), time, h, X, a, attractor, "Погрешность метода эйлера")
     # getDeviation(RungeKutta2(), time, h, X, a, attractor, "Погрешность неявного метода Рунге — Кутты второго порядка")
     # getDeviation(CD(), time, h, X, a, attractor, "Погрешность метода Бутусова")
-    getDiffraction(Eiler(), time, h, X, a, attractor)
-    getDiffraction(RungeKutta2(), time, h, X, a, attractor)
-    getDiffraction(CD(), time, h, X, a, attractor)
-    getDiffraction(RungeKutta4(), time, h, X, a, attractor)
+    # getDiffraction(Eiler(), time, h, X, a, attractor)
+    # getDiffraction(RungeKutta2(), time, h, X, a, attractor)
+    # getDiffraction(CD(), time, h, X, a, attractor)
+    # getDiffraction(RungeKutta4(), time, h, X, a, attractor)
+    D2Difraction.plot(Eiler(), X, a, h, time, 0, 20, 20 / 100, TypeOfParam.param.a3, "a3"
+                            , 60 / h, attractor)
 #

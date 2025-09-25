@@ -4,6 +4,7 @@ from multiprocessing import Pool, cpu_count
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.signal import find_peaks
+from tqdm import tqdm
 
 from models import TypeOfParam
 
@@ -31,12 +32,14 @@ def find_peaks_amplitudes(Ft):
 
 
 def getData(method, X, a, h, time, start, finish, step, type, skip, func):
-    data = [[], [], []]
+    data = []
     tasks = []
     for i in np.arange(start, finish, step):
         match type:
             case TypeOfParam.param.h:
-                h = i
+                h=i
+                # h = start*(1.02216**i) # log шкала
+                skip=60 / h
             case TypeOfParam.param.a0:
                 a = a.copy()
                 a[0] = i
@@ -54,8 +57,15 @@ def getData(method, X, a, h, time, start, finish, step, type, skip, func):
                 a[4] = i
         tasks.append((method, time, h, X, a, func, skip))
 
-    with Pool(cpu_count()) as pool:
-        data = pool.map(getSrez, tasks)
+
+
+    with Pool(processes=cpu_count()-2) as pool:
+        # imap для последовательного получения результатов
+        data = list(tqdm(
+            pool.imap(getSrez, tasks),
+            total=len(tasks),
+            desc="method: "+method.getName()
+        ))
     return data
 
 
@@ -82,7 +92,10 @@ def drawData(data, start, finish, step, type, methodName):
         # Подготовка данных для графика
         x_values = []
         y_values = []
-        x = np.arange(start, finish, step)
+        # x=[]
+        # for i in  np.arange(start, finish, step):
+        #     x.append( start * (1.02216 ** i)) # лог шкала для h
+        x=np.arange(start, finish, step)
         for i, (values, t) in enumerate(zip(data, x)):
             for value in values[j]:
                 y_values.append(value)
@@ -94,10 +107,11 @@ def drawData(data, start, finish, step, type, methodName):
         plt.xlabel('Значения переменной ' + type)
         plt.ylabel('амплитуда по оси ' + getChar(j))
         plt.title('Дифракционная диаграмма ' + methodName)
+        # plt.xscale('log', base=1.02216)  # лог шкала для h
         plt.grid(True, alpha=0.3)
         # plt.show()
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\diagram_{getChar(j)}_{timestamp}.png"
+        filename = f"C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\{methodName}\\diagram_{getChar(j)}_{timestamp}.png"
         plt.savefig(filename, dpi=300, bbox_inches='tight')
         plt.close()  # Важно закрыть фигуру!
 

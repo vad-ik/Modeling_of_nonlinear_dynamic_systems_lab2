@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-def draw(X,h,name,mode=False):
+
+
+def draw(X, h, name, mode=False):
     n_points = len(X[0])
     time = np.arange(0, n_points * h, h)  # Правильное время с шагом h
 
@@ -26,8 +28,8 @@ def draw(X,h,name,mode=False):
     plt.xlabel('Y')
     plt.ylabel('Z')
     if mode:
-        X=X.copy()
-        X=np.abs(X)
+        X = X.copy()
+        X = np.abs(X)
     plt.subplot2grid((2, 3), (1, 0), colspan=3, rowspan=2)
     if mode:
         plt.semilogy(time, X[0], 'b-', label='X(t)', linewidth=1)
@@ -43,7 +45,6 @@ def draw(X,h,name,mode=False):
     plt.legend()
     plt.grid(True, alpha=0.3)
 
-
     plt.suptitle(name)
     plt.tight_layout()
     plt.show()
@@ -51,7 +52,6 @@ def draw(X,h,name,mode=False):
 
 def draw_3d(X, name):
     """3D визуализация аттрактора"""
-    from mpl_toolkits.mplot3d import Axes3D
 
     fig = plt.figure(figsize=(12, 8))
     ax = fig.add_subplot(111, projection='3d')
