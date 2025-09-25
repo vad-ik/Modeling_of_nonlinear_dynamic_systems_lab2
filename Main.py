@@ -67,6 +67,12 @@ if __name__ == "__main__":
     # getDiffraction(RungeKutta2(), time, h, X, a, attractor)
     # getDiffraction(CD(), time, h, X, a, attractor)
     # getDiffraction(RungeKutta4(), time, h, X, a, attractor)
-    D2Difraction.plot(Eiler(), X, a, h, time, 0, 20, 20 / 100, TypeOfParam.param.a3, "a3"
+    D2Difraction.plot(Eiler(), X, a, h, time, 0, 35, 35 / 100, TypeOfParam.param.a3, "a3"
+                            , 60 / h, attractor)
+    D2Difraction.plot(RungeKutta2(), X, a, h, time, 0, 35, 35 / 100, TypeOfParam.param.a3, "a3"
+                            , 60 / h, attractor)
+    D2Difraction.plot(CD(), X, a, h, time, 0, 35, 35 / 100, TypeOfParam.param.a3, "a3"
+                            , 60 / h, attractor)
+    D2Difraction.plot(RungeKutta4(), X, a, h, time, 0, 35, 35 / 100, TypeOfParam.param.a3, "a3"
                             , 60 / h, attractor)
 #

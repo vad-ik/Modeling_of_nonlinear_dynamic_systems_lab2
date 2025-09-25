@@ -38,7 +38,7 @@ def cluster_peaks(peaks, eps=0.1, min_samples=1):
 def plot(method, X, a, h, time, start, finish, step, type, name, skip, func):
     data = []
     debag = 0
-    for i in np.arange(0, 400, 400 / 100):  # перебор a2
+    for i in np.arange(0, 260, 260 / 100):  # перебор a2
         print(debag)
         debag = debag + 1
 
@@ -55,11 +55,13 @@ def plot(method, X, a, h, time, start, finish, step, type, name, skip, func):
 
     # Сохранение
     np.save('data.npy', data)
-    save(data, method.getName(), np.arange(0, 400, 400 / 100), np.arange(start, finish, step))
+    save(data, method.getName(),  np.arange(start, finish, step),np.arange(0, 260, 260 / 100))
+
+    print(method.getName()+" готов")
 
 
-def save(data, name, a2_values=None, a3_values=None):
-    file_path = "C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\"
+def save(data, name, a3_values=None, a2_values=None):
+    file_path = "C:\\Users\\Dark Cat\\PycharmProjects\\ModNelDC\\out\\name\\"
     base_name = "параметр a2 и a3 " + name + " ось "
 
     data = np.array(data)
@@ -103,7 +105,7 @@ def save(data, name, a2_values=None, a3_values=None):
         ax.set_yticklabels(ax.get_yticklabels(), rotation=0)
 
         # Сохраняем с высоким качеством
-        full_path = file_path + f"beautiful_{base_name}{getChar(i)}.png"
+        full_path = file_path + f"ful_{base_name}{getChar(i)}.png"
         plt.savefig(full_path, dpi=300, bbox_inches='tight',
                     facecolor='white', edgecolor='none')
         plt.close()
